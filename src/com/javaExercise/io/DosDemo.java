@@ -15,7 +15,7 @@ public class DosDemo {
         dos.writeInt(-10);
         dos.writeLong(10L);
         dos.writeUTF("中国");//以utf-8格式写入
-        dos.writeChars("中国");//以默认格式写入
+        dos.writeChars("中国");//以utf-16be格式写入
         dos.close();
 
         IOUtil.printHex(filename);
