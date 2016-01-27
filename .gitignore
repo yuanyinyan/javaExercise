@@ -3,9 +3,7 @@
 /out
 
 #test file
-/out.dat
-/copy1.txt
-/copy2.txt
+/demo
 
 ### Java template
 *.class
