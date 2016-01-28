@@ -18,8 +18,12 @@ import java.util.List;
 public class JDOMTest {
 
     public static void main(String[] args) {
+        jdomXMLParser();
+    }
+
+    public static void jdomXMLParser() {
         SAXBuilder saxBuilder = new SAXBuilder();
-        ArrayList<Book> bookArrayList=new ArrayList<Book>();
+        ArrayList<Book> bookArrayList = new ArrayList<Book>();
         try {
             //用于解决编码问题
 //            InputStreamReader isr=new InputStreamReader(new FileInputStream("demo/books.xml"),"UTF-8");
@@ -69,4 +73,5 @@ public class JDOMTest {
             e.printStackTrace();
         }
     }
+
 }

@@ -17,6 +17,10 @@ import java.util.List;
  */
 public class DOM4J {
     public static void main(String[] args) {
+        dom4jXMLParser();
+    }
+
+    public static void dom4jXMLParser() {
         SAXReader reader = new SAXReader();
         ArrayList<Book> bookArrayList = new ArrayList<Book>();
         try {
@@ -68,4 +72,5 @@ public class DOM4J {
             e.printStackTrace();
         }
     }
+
 }

@@ -14,6 +14,10 @@ import java.io.IOException;
  */
 public class SAXTest {
     public static void main(String[] args) {
+       saxXMLParser();
+    }
+
+    public static void saxXMLParser(){
         SAXParserFactory spf = SAXParserFactory.newInstance();
         try {
             SAXParser parser = spf.newSAXParser();
@@ -29,4 +33,5 @@ public class SAXTest {
             e.printStackTrace();
         }
     }
+
 }
