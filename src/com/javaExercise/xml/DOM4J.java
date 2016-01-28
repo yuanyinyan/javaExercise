@@ -29,7 +29,7 @@ public class DOM4J {
         rss.addAttribute("version", "2.0");
         Element channel = rss.addElement("channel");
         Element title = channel.addElement("title");
-        title.setText("<{国内最新新闻}>");
+        title.setText("<![CDATA[国内最新新闻]]>");
         OutputFormat format = OutputFormat.createPrettyPrint();
         format.setEncoding("UTF-8");
 

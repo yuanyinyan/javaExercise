@@ -1,11 +1,12 @@
 package com.javaExercise.xml;
 
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
+import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,30 @@ import java.util.List;
 public class JDOMTest {
 
     public static void main(String[] args) {
-        jdomXMLParser();
+//        jdomXMLParser();
+        createXML();
+    }
+
+    public static void createXML() {
+        Element rss = new Element("rss");
+        rss.setAttribute("version", "2.0");
+        Document document = new Document(rss);
+
+        Element channel = new Element("channel");
+        rss.addContent(channel);
+        Element title = new Element("title");
+        title.addContent(new CDATA("国内最新新闻"));
+        channel.addContent(title);
+
+        Format format = Format.getPrettyFormat();
+        format.setEncoding("UTF-8");
+
+        XMLOutputter outputter = new XMLOutputter(format);
+        try {
+            outputter.output(document, new FileOutputStream(new File("demo/rssnews1.xml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void jdomXMLParser() {
