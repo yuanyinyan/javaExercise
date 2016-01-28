@@ -1,11 +1,13 @@
 package com.javaExercise.xml;
 
-import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
+import org.dom4j.*;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +19,29 @@ import java.util.List;
  */
 public class DOM4J {
     public static void main(String[] args) {
-        dom4jXMLParser();
+//        dom4jXMLParser();
+        createXML();
+    }
+
+    public static void createXML() {
+        Document document = DocumentHelper.createDocument();
+        Element rss = document.addElement("rss");
+        rss.addAttribute("version", "2.0");
+        Element channel = rss.addElement("channel");
+        Element title = channel.addElement("title");
+        title.setText("<{国内最新新闻}>");
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setEncoding("UTF-8");
+
+        try {
+            XMLWriter writer = new XMLWriter(new FileOutputStream(new File("demo/rssnews.xml")), format);
+            writer.setEscapeText(false);
+            writer.write(document);
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void dom4jXMLParser() {
