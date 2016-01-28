@@ -1,14 +1,15 @@
 package com.javaExercise.xml;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,16 +21,50 @@ import java.util.ArrayList;
 public class DOMTest {
 
     public static void main(String[] args) {
-        domXMlParser();
+//        domXMlParser();
+        createXML();
+    }
+
+    public static DocumentBuilder getDocumentBuilder() {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = null;
+        try {
+            db = dbf.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        return db;
+    }
+
+    public static void createXML() {
+        Document document = getDocumentBuilder().newDocument();
+        document.setXmlStandalone(true);
+        Element bookstore = document.createElement("bookstore");
+        Element book = document.createElement("book");
+        book.setAttribute("id", "1");
+        Element name = document.createElement("name");
+        name.setTextContent("构建之法");
+        book.appendChild(name);
+        bookstore.appendChild(book);
+        document.appendChild(bookstore);
+
+        TransformerFactory tff = TransformerFactory.newInstance();
+        try {
+            Transformer transformer = tff.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.transform(new DOMSource(document), new StreamResult(new File("demo/book1.xml")));
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void domXMlParser() {
 
         ArrayList<Book> bookArrayList = new ArrayList<Book>();
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse("demo/books.xml");
+            Document document = getDocumentBuilder().parse("demo/books.xml");
             NodeList bookList = document.getElementsByTagName("book");
             System.out.println("一共有" + bookList.getLength() + "本书.");
 
@@ -80,8 +115,6 @@ public class DOMTest {
                 System.out.println("=========================结束遍历第" + (i + 1) + "本书的内容===========================");
             }
             System.out.println(bookArrayList);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
